@@ -1,5 +1,5 @@
 {
-  "name": "lb-cli",
+  "name": "lbk-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,11 +8,11 @@
     "ca": "git add -A && git-cz -av"
   },
   "bin": {
-    "lb": "bin/lb",
-    "lb-add": "bin/lb-add",
-    "lb-delete": "bin/lb-delete",
-    "lb-list": "bin/lb-list",
-    "lb-init": "bin/lb-init"
+    "lbk": "bin/lbk",
+    "lbk-add": "bin/lbk-add",
+    "lbk-delete": "bin/lbk-delete",
+    "lbk-list": "bin/lbk-list",
+    "lbk-init": "bin/lbk-init"
   },
   "author": "",
   "license": "ISC",
