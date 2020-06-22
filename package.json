@@ -1,0 +1,25 @@
+{
+  "name": "lb-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "lb": "bin/xr",
+    "lb-add": "bin/lb-add",
+    "lb-delete": "bin/lb-delete",
+    "lb-list": "bin/lb-list",
+    "lb-init": "bin/lb-init"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^5.1.0",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^7.2.0",
+    "ora": "^4.0.4"
+  }
+}
