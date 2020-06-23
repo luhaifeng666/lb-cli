@@ -30,13 +30,29 @@ const questions = [
       if (!val) return 'The url is required!'
       return true
     }
+  }, {
+    name: 'author',
+    type: 'input',
+    message: '请输入作者名称',
+    validate (val) {
+      if (!val) return 'The author is required!'
+      return true
+    }
+  }, {
+    name: 'description',
+    type: 'input',
+    message: '请输入项目描述'
   }
 ]
 
 inquirer
   .prompt(questions).then(answers => {
-    let {name, url} = answers
-    tplObj[name] = url.replace(/[\u0000-\u0019]/g, '')
+    let {name, url, author, description} = answers
+    tplObj[name] ={
+      url: url.replace(/[\u0000-\u0019]/g, ''),
+      author,
+      description
+    }
     fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tplObj), 'utf-8', err => {
       if (err) {
         console.log(`Error: ${chalk.red(err.message)}`)
