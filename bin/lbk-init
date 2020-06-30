@@ -7,6 +7,7 @@ const download = require('download-git-repo')
 const tplObj = require(`${__dirname}/../template`)
 const handlebars = require('handlebars')
 const fs = require('fs')
+const shell = require('shelljs')
 
 program
   .usage('<template-name> [project-name]')
@@ -56,10 +57,18 @@ download(
     if (fs.existsSync(fileName)) {
       const content = fs.readFileSync(fileName).toString()
       const res = handlebars.compile(content)(meta)
-      fs.writeFileSync(fileName, res)
+      fs.writeFile(fileName, res, err => {
+        if (err) {
+          console.log(chalk.red(`Create package.json error: ${err}`))
+        } else {
+          shell.cd(`${projectName}`)
+          shell.exec('vue add @f6/cz --registry https://maven.carzone365.com/repository/npm-group/')
+          shell.exec('sudo npm install')
+          console.log(chalk.green('\n Generation completed!'))
+          console.log('\n To get started')
+          console.log(chalk.green(`\n  cd ${projectName} && yarn dev  \n`))
+        }
+      })
     }
-    console.log(chalk.green('\n Generation completed!'))
-    console.log('\n To get started')
-    console.log(`\n  cd ${projectName}  \n`)
   }
 )

@@ -5,37 +5,42 @@ const chalk = require('chalk')
 const fs = require('fs')
 const tplObj = require(`${__dirname}/../template`)
 
+const choices = Object.keys(tplObj)
+
 let questions = [
   {
     name: 'name',
-    message: '请输入需要删除的模板名称',
-    validate (val) {
-      if (!val) {
-        return 'Name is required!'
-      } else if (!tplObj[val]) {
-        return 'Template does not exist!'
-      } else {
-        return true
-      }
-    }
+    message: '请选择需要删除的模板名称',
+    type: 'checkbox',
+    choices
   }
 ] 
   
 inquirer
   .prompt(questions).then(answer => {
-    const {name} = answer
-    delete tplObj[name]
-
-    fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tplObj), 'utf-8', err => {
-      if (err) {
-        console.log(chalk.red(`Error: ${err.message}`))
-        return false
-      } else {
-        console.log('\n')
-        console.log(chalk.green('Deleted successfully!\n'))
-        console.log(chalk.grey('The latest template list is: \n'))
-        console.log(tplObj)
-        console.log('\n')
+    const { name } = answer
+    if (name.length) {
+      for (let key of name) {
+        delete tplObj[key]
       }
-    })
+  
+      fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tplObj), 'utf-8', err => {
+        if (err) {
+          console.log(chalk.red(`Error: ${err.message}`))
+          return false
+        } else {
+          console.log('\n')
+          console.log(chalk.green('Deleted successfully!\n'))
+        }
+      })
+    }
+    
+    const keys = Object.keys(tplObj)
+    const restTpl = keys.reduce((arr, val) => [...arr, {
+      name: val,
+      ...tplObj[val]
+    }], [])
+    console.log(chalk.grey('The latest template list is: \n'))
+    console.table(restTpl)
+    console.log('\n')
   })

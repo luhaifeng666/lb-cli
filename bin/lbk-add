@@ -61,7 +61,12 @@ inquirer
         console.log('\n')
         console.log(chalk.green('Added successfully!\n'))
         console.log(chalk.grey('The latest template list is: \n'))
-        console.log(tplObj)
+        const keys = Object.keys(tplObj)
+        const restTpl = keys.reduce((arr, val) => [...arr, {
+          name: val,
+          ...tplObj[val]
+        }], [])
+        console.table(restTpl)
         console.log('\n')
       }
     })

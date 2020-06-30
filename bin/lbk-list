@@ -1,4 +1,9 @@
 #! /usr/bin/env node
 
 const tplObj = require(`${__dirname}/../template`)
-console.log(tplObj)
+const keys = Object.keys(tplObj)
+const restTpl = keys.reduce((arr, val) => [...arr, {
+  name: val,
+  ...tplObj[val]
+}], [])
+console.table(restTpl)
